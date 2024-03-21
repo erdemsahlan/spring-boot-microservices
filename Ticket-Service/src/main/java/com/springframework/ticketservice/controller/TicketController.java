@@ -41,4 +41,12 @@ public class TicketController {
         return _ticketService.DeleteTicket(id);
     }
 
+    @GetMapping("/find/idNo/{idNo}")
+    public ResponseEntity<?> FindByIdNo(@PathVariable String idNo)
+    {
+        return _ticketService.FindTicketByIdNo(idNo);
+    }
+
+
+
 }

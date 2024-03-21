@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication(scanBasePackages = {"com.homeproject.homeprojectfortrainingspringframework"})
 @EnableJpaRepositories(basePackages = {"com.homeproject.homeprojectfortrainingspringframework"})
 @EntityScan(basePackages = {"com.homeproject.homeprojectfortrainingspringframework"})
-
 public class HomeProjectForTrainingSpringFrameworkApplication {
 
     public static void main(String[] args) {

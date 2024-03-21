@@ -10,6 +10,4 @@ import java.util.List;
 public class DepartmentDto {
     private String departmentName;
     private int size;
-    @OneToMany
-    private List<Employee> employees;
 }

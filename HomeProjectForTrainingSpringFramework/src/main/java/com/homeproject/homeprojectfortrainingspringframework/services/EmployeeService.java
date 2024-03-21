@@ -4,12 +4,14 @@ import com.homeproject.homeprojectfortrainingspringframework.dtos.DepartmentDto;
 import com.homeproject.homeprojectfortrainingspringframework.dtos.EmployeeDto;
 import com.homeproject.homeprojectfortrainingspringframework.modals.Department;
 import com.homeproject.homeprojectfortrainingspringframework.modals.Employee;
+import com.homeproject.homeprojectfortrainingspringframework.outsourceModals.TicketModal;
 import com.homeproject.homeprojectfortrainingspringframework.repository.IEmployeeRepository;
 import com.homeproject.homeprojectfortrainingspringframework.utilities.Mapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,11 +20,13 @@ import java.util.NoSuchElementException;
 public class EmployeeService {
     private final IEmployeeRepository _employeeRepository;
     private final DepartmentService _departmentService;
+    private final WebClient _webClient;
 
 
-    public EmployeeService(IEmployeeRepository employeeRepository, DepartmentService departmentService) {
+    public EmployeeService(IEmployeeRepository employeeRepository, DepartmentService departmentService, WebClient webClient) {
         _employeeRepository = employeeRepository;
         _departmentService = departmentService;
+        _webClient = webClient;
     }
 
     public ResponseEntity<List<EmployeeDto>> GetALlEmployee()
@@ -68,5 +72,14 @@ public class EmployeeService {
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
+    public ResponseEntity<?> GetEmployeeTicketInfo(int id)
+    {
+        EmployeeDto employeeDto = GetEmployeeById(id).getBody();
+        TicketModal ticketModal = _webClient.get()
+                .uri("http://localhost:8081/ticket/find/idNo/"+employeeDto.getEmployeeIdentityNo())
+                .retrieve().bodyToMono(TicketModal.class).block();
+        return ResponseEntity.status(HttpStatus.OK).body(ticketModal);
+
+    }
 
 }
