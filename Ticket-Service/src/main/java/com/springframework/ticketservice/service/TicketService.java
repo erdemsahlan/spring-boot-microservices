@@ -48,9 +48,10 @@ public class TicketService {
         TicketDto ticketDto = Mapper.map(ticket,TicketDto.class);
         return  ResponseEntity.status(HttpStatus.OK).body(ticketDto);
     }
-    public ResponseEntity<?> UpdateTicket(TicketDto ticketDto)
+    public ResponseEntity<?> UpdateTicket(TicketDto ticketDto, int id)
     {
-        Ticket ticket = _ticket.findOne(ticketDto.getId());
+
+        Ticket ticket = _ticket.findOne(id);
         ticket.setEmployeeIdentityNo(ticketDto.getEmployeeIdentityNo());
         ticket.setExpiryTime(ticketDto.getExpiryTime());
         ticket.setTicketBudget(ticketDto.getTicketBudget());
@@ -66,8 +67,8 @@ public class TicketService {
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
-    public ResponseEntity<?> FindTicketByIdNo(String idNo){
-        Ticket ticket= _ticketRepository.findTicketByIdNo(idNo).orElseThrow();
+    public ResponseEntity<?> FindTicketByIdNo(String tcNo){
+        Ticket ticket= _ticketRepository.findTicketByIdNo(tcNo).orElseThrow();
         TicketDto ticketDto = Mapper.map(ticket,TicketDto.class);
         return ResponseEntity.status(HttpStatus.OK).body(ticketDto);
     }

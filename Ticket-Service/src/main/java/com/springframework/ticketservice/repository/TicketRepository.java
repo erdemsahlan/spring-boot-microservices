@@ -8,6 +8,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 public interface TicketRepository extends JpaRepository<Ticket,Integer> {
-    @Query("select t from Ticket t where t.employeeIdentityNo=:idNo")
-    Optional<Ticket> findTicketByIdNo(String idNo );
+    @Query("select t from Ticket t where t.employeeIdentityNo=:tcNo")
+    Optional<Ticket> findTicketByIdNo(String tcNo );
 }

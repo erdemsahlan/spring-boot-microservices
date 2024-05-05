@@ -6,7 +6,6 @@ import java.util.Date;
 
 @Data
 public class TicketDto {
-    private int id;
     private String employeeIdentityNo;
     private int ticketBudget;
     private Date expiryTime;

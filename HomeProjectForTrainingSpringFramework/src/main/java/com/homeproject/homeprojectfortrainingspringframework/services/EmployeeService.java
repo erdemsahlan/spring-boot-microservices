@@ -1,6 +1,5 @@
 package com.homeproject.homeprojectfortrainingspringframework.services;
 
-import com.homeproject.homeprojectfortrainingspringframework.dtos.DepartmentDto;
 import com.homeproject.homeprojectfortrainingspringframework.dtos.EmployeeDto;
 import com.homeproject.homeprojectfortrainingspringframework.modals.Department;
 import com.homeproject.homeprojectfortrainingspringframework.modals.Employee;
@@ -15,6 +14,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -71,12 +71,17 @@ public class EmployeeService {
         _employeeRepository.save(employee);
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
-
+    public ResponseEntity<?> GetEmployeeByTcNo(String tcNo)
+    {
+      Employee employee = _employeeRepository.findEmployeeByTcNo(tcNo).orElseThrow();
+      EmployeeDto employeeDto = Mapper.map(employee,EmployeeDto.class);
+      return  ResponseEntity.status(HttpStatus.OK).body(employeeDto);
+    }
     public ResponseEntity<?> GetEmployeeTicketInfo(int id)
     {
         EmployeeDto employeeDto = GetEmployeeById(id).getBody();
         TicketModal ticketModal = _webClient.get()
-                .uri("http://localhost:8081/ticket/find/idNo/"+employeeDto.getEmployeeIdentityNo())
+                .uri("http://localhost:8081/ticket/find/tcNo/"+employeeDto.getEmployeeIdentityNo())
                 .retrieve().bodyToMono(TicketModal.class).block();
         return ResponseEntity.status(HttpStatus.OK).body(ticketModal);
 

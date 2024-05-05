@@ -30,10 +30,10 @@ public class TicketController {
     {
         return  _ticketService.CreateTicket(ticketDto);
     }
-    @PostMapping("/update")
-    public  ResponseEntity<?> UpdateTicket(@RequestBody TicketDto ticketDto)
+    @PostMapping("/update/{id}")
+    public  ResponseEntity<?> UpdateTicket(@RequestBody TicketDto ticketDto,@PathVariable int id)
     {
-        return _ticketService.UpdateTicket(ticketDto);
+        return _ticketService.UpdateTicket(ticketDto,id);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> DeleteTicket(@PathVariable int id)
@@ -41,10 +41,10 @@ public class TicketController {
         return _ticketService.DeleteTicket(id);
     }
 
-    @GetMapping("/find/idNo/{idNo}")
-    public ResponseEntity<?> FindByIdNo(@PathVariable String idNo)
+    @GetMapping("/find/tcNo/{tcNo}")
+    public ResponseEntity<?> FindByIdNo(@PathVariable String tcNo)
     {
-        return _ticketService.FindTicketByIdNo(idNo);
+        return _ticketService.FindTicketByIdNo(tcNo);
     }
 
 
