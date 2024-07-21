@@ -23,6 +23,7 @@ public class DepartmentService {
     public ResponseEntity<?> CreateDepartment(DepartmentDto departmentDto)
     {
         Department department = Mapper.map(departmentDto,Department.class);
+        department.setActive(true);
         var result= _department.create(department);
         DepartmentDto resultDto = Mapper.map(result,DepartmentDto.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(resultDto);
@@ -38,6 +39,11 @@ public class DepartmentService {
         Department department = _department.findOne(id);
         DepartmentDto departmentDto = Mapper.map(department,DepartmentDto.class);
         return ResponseEntity.status(HttpStatus.OK).body(departmentDto);
+    }
+    public Department FindDepartmentForEmployeeById(int id)
+    {
+        Department department = _department.findOne(id);
+        return department;
     }
     public Department FindDepartmentByIdForOtherServices(int id)
     {

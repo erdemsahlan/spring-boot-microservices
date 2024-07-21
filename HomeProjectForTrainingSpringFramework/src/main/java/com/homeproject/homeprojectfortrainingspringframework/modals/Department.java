@@ -20,7 +20,5 @@ public class Department {
     private String DepartmentName;
     private int size;
     private boolean isActive;
-    @OneToMany()
-    private List<Employee> Employees;
 
 }

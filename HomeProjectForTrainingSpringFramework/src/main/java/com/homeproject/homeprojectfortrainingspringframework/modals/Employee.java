@@ -30,6 +30,7 @@ public class Employee {
     private Date birthDate;
     private Date jobStartDate;
     private boolean isActive;
+    private int totalCash;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;

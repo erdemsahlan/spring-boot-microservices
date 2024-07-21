@@ -18,5 +18,6 @@ public class EmployeeDto {
     private Date BirthDate;
     private Date JobStartDate;
     private Integer DepartmentId;
+    private int totalCash;
 
 }
