@@ -1,0 +1,26 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Auth
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+      show_sql: true
+  main:
+    web-application-type: servlet
+
+  application:
+    security:
+      jwy:
+        secret-key : ff16ff67acb9367e89e158a3a4fa9812b3e11d43651fe2e3dcf1d1a9915a46b3
+        expiration: 86400000
+        refresh-token:
+          expiration: 604800000
