@@ -2,7 +2,9 @@ package com.autenticationservice.autenticationservice.config;
 
 import com.autenticationservice.autenticationservice.entity.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -15,19 +17,22 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
 @EnableMethodSecurity
+@ComponentScan(basePackages = "com.autenticationservice.autenticationservice")
 public class SecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {
-            "/auth/**"};
+            "/auth/**","/auth/register"};
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final   AuthenticationProvider authenticationProvider;
-//    private final LogoutHandler logoutHandler;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
@@ -35,9 +40,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/auth/**")
+                                .requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-//                                .requestMatchers("/employee/**").hasAnyRole(Role.USER.name())
                                 .anyRequest()
                                 .authenticated()
                 )
