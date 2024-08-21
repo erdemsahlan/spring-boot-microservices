@@ -18,8 +18,10 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    @Value("${spring.application.security.jwy.expiration}")
+    @Value("${spring.application.security.jwy.secret-key}")
     private  String SECRET_KEY;
+
+    private String secret = "2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D";
 
 
     public String extractUsername(String token) {
@@ -55,7 +57,7 @@ public class JwtService {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000 * 60 * 24 ))
-                .signWith(getSingInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSingInKey(),SignatureAlgorithm.HS256)
                 .compact();
     }
 

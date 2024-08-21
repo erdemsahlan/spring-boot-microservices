@@ -5,12 +5,14 @@ import com.autenticationservice.autenticationservice.dto.AuthenticationResponse;
 import com.autenticationservice.autenticationservice.dto.AuthhenticateRequest;
 import com.autenticationservice.autenticationservice.dto.ReqisterRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class AuthcantionController {
 
     private final AuthenticationService authenticationService;
@@ -22,9 +24,9 @@ public class AuthcantionController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthhenticateRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+        AuthenticationResponse response = authenticationService.authenticate(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 
 
 }

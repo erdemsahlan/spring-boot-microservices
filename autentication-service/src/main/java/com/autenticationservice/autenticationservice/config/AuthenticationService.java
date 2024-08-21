@@ -37,17 +37,21 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthhenticateRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        var user = userRepository.findbyEmail(request.getEmail())
-                .orElseThrow();
-        var jwt = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwt)
-                .build();
+       try {
+           authenticationManager.authenticate(
+                   new UsernamePasswordAuthenticationToken(
+                           request.getEmail(),
+                           request.getPassword()
+                   )
+           );
+           var user = userRepository.findbyEmail(request.getEmail())
+                   .orElseThrow();
+           var jwt = jwtService.generateToken(user);
+           return AuthenticationResponse.builder()
+                   .token(jwt)
+                   .build();
+       }catch (Exception e) {
+           throw e;
+       }
     }
 }

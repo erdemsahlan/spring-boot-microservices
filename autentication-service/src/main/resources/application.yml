@@ -20,7 +20,7 @@ spring:
   application:
     security:
       jwy:
-        secret-key : ff16ff67acb9367e89e158a3a4fa9812b3e11d43651fe2e3dcf1d1a9915a46b3
+        secret-key : 2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D
         expiration: 86400000
         refresh-token:
           expiration: 604800000
